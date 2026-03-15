@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   # ──── Backend (FastAPI) ────
   backend:
@@ -15,6 +13,8 @@ services:
     volumes:
       - ./backend:/app
     restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   # ──── Frontend (Vite dev server) ────
   frontend:
@@ -43,6 +43,8 @@ services:
     volumes:
       - ./backend:/app
     restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   # ──── Redis ────
   redis:

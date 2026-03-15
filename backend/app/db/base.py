@@ -8,4 +8,4 @@ class Base(DeclarativeBase):
 
 
 # Import models so Alembic / create_all can discover them
-from app.models import user, medication, adverse_event  # noqa: E402, F401
+from app.models import user, medication, adverse_event, hormone_cycle_log  # noqa: E402, F401

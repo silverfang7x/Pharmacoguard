@@ -36,5 +36,8 @@ class Settings(BaseSettings):
     # ── Groq AI ──
     GROQ_API_KEY: str = ""
 
+    # ── ElevenLabs TTS ──
+    ELEVENLABS_API_KEY: str = ""
+
 
 settings = Settings()

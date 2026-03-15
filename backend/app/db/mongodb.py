@@ -10,3 +10,4 @@ mongo_db = mongo_client[settings.MONGODB_DB_NAME]
 # Collections
 logs_collection = mongo_db["logs"]
 ai_interactions_collection = mongo_db["ai_interactions"]
+medication_schedules_collection = mongo_db["medication_schedules"]

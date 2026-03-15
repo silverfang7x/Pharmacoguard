@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -49,7 +51,392 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
   }
+}
+
+/* ── Hero orb animations ───────────────────────────────────────── */
+@keyframes orb-pulse {
+
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.75;
+  }
+
+  33% {
+    transform: scale(1.08) rotate(120deg);
+    opacity: 0.95;
+  }
+
+  66% {
+    transform: scale(0.94) rotate(240deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes orb-drift {
+
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+
+  50% {
+    transform: translateY(-18px) translateX(10px);
+  }
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-orb-pulse {
+  animation: orb-pulse 6s ease-in-out infinite;
+}
+
+.animate-orb-drift {
+  animation: orb-drift 8s ease-in-out infinite;
+}
+
+.btn-shimmer {
+  background-size: 200% auto;
+  background-image: linear-gradient(90deg,
+      #4F46E5 0%,
+      #7C3AED 30%,
+      #a78bfa 50%,
+      #7C3AED 70%,
+      #4F46E5 100%);
+  transition: background-position 0.4s ease, box-shadow 0.3s ease;
+}
+
+.btn-shimmer:hover {
+  animation: shimmer-sweep 1.2s linear infinite;
+  box-shadow: 0 0 22px 4px rgba(124, 58, 237, 0.55);
+}
+
+/* ── Star particles for HomePage ───────────────────────────────── */
+@keyframes star-drift {
+  0% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+}
+
+.stars-container {
+  overflow: hidden;
+}
+
+.stars-container::before,
+.stars-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.stars-container::before {
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(255, 255, 255, 0.6) 50%, transparent 100%),
+    radial-gradient(1px 1px at 30% 40%, rgba(255, 255, 255, 0.4) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 50% 60%, rgba(165, 180, 252, 0.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 70% 15%, rgba(255, 255, 255, 0.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 85% 75%, rgba(196, 181, 253, 0.4) 50%, transparent 100%),
+    radial-gradient(1px 1px at 15% 80%, rgba(255, 255, 255, 0.3) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 40% 90%, rgba(165, 180, 252, 0.4) 50%, transparent 100%),
+    radial-gradient(1px 1px at 60% 35%, rgba(255, 255, 255, 0.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 95% 50%, rgba(255, 255, 255, 0.3) 50%, transparent 100%),
+    radial-gradient(1px 1px at 25% 55%, rgba(196, 181, 253, 0.4) 50%, transparent 100%);
+  animation: star-drift 30s linear infinite;
+}
+
+.stars-container::after {
+  background-image:
+    radial-gradient(1px 1px at 5% 30%, rgba(255, 255, 255, 0.4) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 22% 70%, rgba(165, 180, 252, 0.3) 50%, transparent 100%),
+    radial-gradient(1px 1px at 48% 10%, rgba(255, 255, 255, 0.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 68% 88%, rgba(196, 181, 253, 0.4) 50%, transparent 100%),
+    radial-gradient(1px 1px at 90% 25%, rgba(255, 255, 255, 0.3) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 35% 50%, rgba(165, 180, 252, 0.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 77% 45%, rgba(255, 255, 255, 0.4) 50%, transparent 100%),
+    radial-gradient(1px 1px at 55% 72%, rgba(196, 181, 253, 0.3) 50%, transparent 100%);
+  animation: star-drift 45s linear infinite;
+  animation-delay: -15s;
+}
+
+/* ── Mesh gradient base ────────────────────────────────────────── */
+.mesh-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.mesh-bg::before,
+.mesh-bg::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  animation: meshFloat 12s ease-in-out infinite alternate;
+}
+
+.mesh-bg::before {
+  width: 600px;
+  height: 600px;
+  top: -100px;
+  left: -100px;
+}
+
+.mesh-bg::after {
+  width: 500px;
+  height: 500px;
+  bottom: -100px;
+  right: -100px;
+  animation-delay: -6s;
+}
+
+@keyframes meshFloat {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+
+  33% {
+    transform: translate(40px, -30px) scale(1.05);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.97);
+  }
+
+  100% {
+    transform: translate(30px, 10px) scale(1.03);
+  }
+}
+
+/* Third floating blob for extra depth */
+.mesh-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.2;
+  z-index: -1;
+  animation: meshFloat 16s ease-in-out infinite alternate-reverse;
+}
+
+/* Per-page mesh colour themes */
+.mesh-dashboard::before {
+  background: #6366F1;
+}
+
+.mesh-dashboard::after {
+  background: #8B5CF6;
+}
+
+.mesh-dashboard .mesh-blob {
+  background: #C4B5FD;
+  width: 400px;
+  height: 400px;
+  top: 40%;
+  left: 40%;
+}
+
+.mesh-medications::before {
+  background: #7C3AED;
+}
+
+.mesh-medications::after {
+  background: #A78BFA;
+}
+
+.mesh-medications .mesh-blob {
+  background: #DDD6FE;
+  width: 350px;
+  height: 350px;
+  top: 30%;
+  left: 50%;
+}
+
+.mesh-druginfo::before {
+  background: #2563EB;
+}
+
+.mesh-druginfo::after {
+  background: #60A5FA;
+}
+
+.mesh-druginfo .mesh-blob {
+  background: #BAE6FD;
+  width: 380px;
+  height: 380px;
+  top: 50%;
+  left: 30%;
+}
+
+.mesh-schedule::before {
+  background: #059669;
+}
+
+.mesh-schedule::after {
+  background: #34D399;
+}
+
+.mesh-schedule .mesh-blob {
+  background: #A7F3D0;
+  width: 360px;
+  height: 360px;
+  top: 35%;
+  left: 45%;
+}
+
+.mesh-adverse::before {
+  background: #E11D48;
+}
+
+.mesh-adverse::after {
+  background: #FB7185;
+}
+
+.mesh-adverse .mesh-blob {
+  background: #FECDD3;
+  width: 340px;
+  height: 340px;
+  top: 45%;
+  left: 35%;
+}
+
+.mesh-ai::before {
+  background: #D97706;
+}
+
+.mesh-ai::after {
+  background: #FBBF24;
+}
+
+.mesh-ai .mesh-blob {
+  background: #FDE68A;
+  width: 370px;
+  height: 370px;
+  top: 40%;
+  left: 40%;
+}
+
+.mesh-gamification::before {
+  background: #EA580C;
+}
+
+.mesh-gamification::after {
+  background: #FB923C;
+}
+
+.mesh-gamification .mesh-blob {
+  background: #FED7AA;
+  width: 350px;
+  height: 350px;
+  top: 35%;
+  left: 50%;
+}
+
+.mesh-profile::before {
+  background: #0891B2;
+}
+
+.mesh-profile::after {
+  background: #22D3EE;
+}
+
+.mesh-profile .mesh-blob {
+  background: #A5F3FC;
+  width: 360px;
+  height: 360px;
+  top: 40%;
+  left: 35%;
+}
+
+.mesh-hormone::before {
+  background: #EC4899;
+}
+
+.mesh-hormone::after {
+  background: #F472B6;
+}
+
+.mesh-hormone .mesh-blob {
+  background: #FBCFE8;
+  width: 360px;
+  height: 360px;
+  top: 40%;
+  left: 45%;
+}
+
+/* Doctor hover interactions */
+.doctor-trigger:hover .doctor-svg {
+  transform: translateY(-10px);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.doctor-trigger:hover .doctor-right-arm {
+  transform-origin: 86px 78px;
+  transform: rotate(-25deg);
+  transition: transform 0.3s ease;
+}
+
+@keyframes doctorWave {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-30deg);
+  }
+
+  75% {
+    transform: rotate(-15deg);
+  }
+}
+
+.doctor-wave .doctor-right-arm {
+  transform-origin: 86px 78px;
+  animation: doctorWave 0.8s ease-in-out;
+}
+
+@keyframes doctorBreathe {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.doctor-idle {
+  animation: doctorBreathe 4s ease-in-out infinite;
 }
