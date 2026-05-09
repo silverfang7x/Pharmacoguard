@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import { useAuthStore } from "@/stores/auth-store";
 import { motion, AnimatePresence } from "framer-motion";
-import { Eye, EyeOff, User, Stethoscope } from "lucide-react";
+import { Eye, EyeOff, User, Stethoscope, Play } from "lucide-react";
 
 // ── Custom SVG Logo ────────────────────────────────────────────────
 function PharmacoLogo({ size = 64 }: { size?: number }) {
@@ -365,6 +365,69 @@ function SignUpForm() {
   );
 }
 
+// ── Demo Login Button ──────────────────────────────────────────────
+function DemoLoginButton() {
+  const navigate = useNavigate();
+  const setSession = useAuthStore((s) => s.setSession);
+  const setRole = useAuthStore((s) => s.setRole);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleDemoLogin = async () => {
+    setError(null);
+    setLoading(true);
+    const { data, error: err } = await supabase.auth.signInWithPassword({
+      email: "demo@pharmacoguard.com",
+      password: "password123",
+    });
+    setLoading(false);
+    if (err) {
+      setError("Demo account unavailable. Please try again later.");
+      return;
+    }
+    if (data.session) {
+      setSession(data.session);
+      const role = data.session.user.user_metadata?.role ?? "patient";
+      setRole(role);
+      navigate("/");
+    }
+  };
+
+  return (
+    <div className="mt-4">
+      {error && (
+        <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-3 text-center">
+          {error}
+        </p>
+      )}
+      <div className="relative flex items-center justify-center mb-4">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-gray-200" />
+        </div>
+        <span className="relative bg-white px-3 text-xs text-gray-400">or</span>
+      </div>
+      <button
+        type="button"
+        onClick={handleDemoLogin}
+        disabled={loading}
+        className="
+          w-full py-3 rounded-xl font-semibold text-sm
+          flex items-center justify-center gap-2
+          border-2 border-indigo-200 text-indigo-600
+          bg-indigo-50/50 backdrop-blur-sm
+          hover:border-indigo-400 hover:bg-indigo-100/60 hover:shadow-md hover:shadow-indigo-100
+          active:scale-[0.98]
+          transition-all duration-200 ease-out
+          disabled:opacity-50 disabled:cursor-not-allowed
+        "
+      >
+        <Play size={16} className={loading ? "animate-spin" : ""} />
+        {loading ? "Launching demo…" : "Try Demo Account"}
+      </button>
+    </div>
+  );
+}
+
 // ── Tab Switcher ───────────────────────────────────────────────────
 const TABS = ["Sign In", "Sign Up"] as const;
 type Tab = (typeof TABS)[number];
@@ -475,6 +538,9 @@ export default function LoginPage() {
               </>
             )}
           </p>
+
+          {/* Demo Account Button */}
+          {activeTab === "Sign In" && <DemoLoginButton />}
         </div>
       </div>
     </div>
