@@ -377,7 +377,7 @@ function DemoLoginButton() {
     setError(null);
     setLoading(true);
     const { data, error: err } = await supabase.auth.signInWithPassword({
-      email: "demo@pharmacoguard.com",
+      email: "silverfang7x@gmail.com",
       password: "password123",
     });
     setLoading(false);
