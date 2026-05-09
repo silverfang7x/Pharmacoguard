@@ -2,6 +2,8 @@
 
 > AI-powered pharmacovigilance platform for monitoring drug interactions, adverse events, and medication safety.
 
+**Live Demo:** https://pharmacoguard.vercel.app
+
 ---
 
 ## Architecture
